@@ -1,1 +1,2 @@
 # AmelieViajes_Lobos
+En el mundo dinámico y competitivo de la industria de viajes, la gestión eficiente de la información es crucial para ofrecer un servicio de alta calidad y mejorar la experiencia del cliente. Este proyecto tiene como objetivo diseñar e implementar una base de datos integral para una agencia de viajes minorista, que permita la gestión efectiva de la información relacionada con clientes, reservas, destinos, proveedores y operaciones.
