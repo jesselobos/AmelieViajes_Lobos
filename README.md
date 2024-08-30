@@ -21,3 +21,7 @@ Centralización de Datos: Almacenar toda la información relevante en una base d
 Personalización del Servicio al Cliente: Utilizar los datos para ofrecer un servicio más personalizado a los clientes, entendiendo mejor sus preferencias y necesidades. 
 
 Análisis y Reportes: Facilitar la generación de informes y análisis de datos para apoyar la toma de decisiones estratégicas y operativas. 
+
+# Desarrollo del Proyecto
+
+Continúa en el archivo pdf
