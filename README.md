@@ -28,7 +28,8 @@ Continúa en el archivo Amelie Viajes - Entrega Final.pdf
 
 # Reentrega Proyecto
 
-Para trabajar en nuevas Views y en una función trabajé con Alters dentro de la Query base. Además en el final de esta se encuentra la sentencia para el backup. 
+Para trabajar en nuevas Views y en una función trabajé con Alters dentro de la Query base. Además, en el final de esta se encuentra la sentencia para el backup. 
+
 
 -- Modifico la tabla Operaciones. Le incorporo la columna ID_reserva
 
@@ -38,12 +39,14 @@ ADD CONSTRAINT fk_ID_Reserva FOREIGN KEY (ID_Reserva) REFERENCES Reservas(ID_Res
 
 El ID_Reserva lo agregué como dato también en la Tabla Facturacion_Clientes y en Historico_Operaciones
 
+
 -- Incorporo la columna Costo  
 
 ALTER TABLE Historico_Operaciones
 ADD Costo DECIMAL(18, 2);
 
 ;
+
 
 -- Agrego los datos a la columna 
 
@@ -54,7 +57,10 @@ UPDATE ho
 
 ;
 
+-- Creo una View para poder registrar viajes que aún estén pendientes de realizarse para un seguimiento
+
 CREATE VIEW Viajes_Pendientes AS
+
 SELECT 
     r.ID_Reserva,
     c.Nombre_completo AS Nombre_Cliente,
@@ -63,39 +69,56 @@ SELECT
     
 FROM 
     Operaciones r
+
 JOIN 
     Clientes c ON r.ID_Cliente = c.ID_Cliente
+
 JOIN 
     Destinos d ON r.Destino = d.Destino
+
 WHERE 
     r.Fecha_servicio > CURDATE()
     
 ;
 
+-- Con esta View puedo monetizar todas las compras de un determinado cliente 
+
 CREATE VIEW Reservas_Cliente AS
+
 SELECT 
     c.ID_Cliente,
     c.Nombre_completo,
     COUNT(r.ID_Reserva) AS NumeroDeReservas,
     SUM(r.Monto) AS MontoTotalGastado
+
 FROM 
     Clientes c
+
 JOIN 
     Reservas r ON c.ID_Cliente = r.ID_Cliente
+
 GROUP BY 
     c.ID_Cliente, c.Nombre
     
 ;
 
+
+-- Creo una Function para monetizar el total de las operaciones realizadas guardadas en la tabla Historico_Operaciones
+
 CREATE FUNCTION dbo.Costo_Historico ()
+
 RETURNS DECIMAL(18, 2)
+
 AS
+
 BEGIN
+    
     DECLARE @Total DECIMAL(18, 2);
 
     SELECT @Total = SUM(Costo)
     FROM Historico_Operaciones;
 
     RETURN ISNULL(@Total, 0);
+
 END
 ;
